@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:quiz/data/question_repository.dart';
+import 'package:quiz/domain/question.dart';
+import 'package:quiz/presentation/widgets/question_option_widget.dart';
 
 class QuestionPage extends StatefulWidget {
   const QuestionPage({super.key});
@@ -8,7 +11,22 @@ class QuestionPage extends StatefulWidget {
 }
 
 class _QuestionPageState extends State<QuestionPage> {
-  bool _visible = true;
+  late bool _visible;
+  late List<Question> _questions;
+  late Question _question;
+  late int _position;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    _visible = true;
+    _questions = loadQuestions();
+    _position = 0;
+
+    _question = _questions[_position];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,30 +37,55 @@ class _QuestionPageState extends State<QuestionPage> {
       body: AnimatedOpacity(
         opacity: _visible ? 1.0 : 0.0,
         duration: const Duration(milliseconds: 500),
-        child: Column(
-          children: [
-            Expanded(
-              flex: 1,
-              child: const Text("Qual é a cor predominante do tubarão branco?"),
-            ),
-            Expanded(
-              flex: 1,
-              child: Column(
-                children: [
-                  ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          _visible = false;
-                        });
-                      },
-                      child: const Text("branco")),
-                  ElevatedButton(onPressed: () {}, child: const Text("cinza")),
-                ],
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(_question.text)),
               ),
-            ),
-          ],
+              Expanded(
+                flex: 2,
+                child: Column(
+                  children: _question
+                      .answers()
+                      .map(
+                          (e) => QuestionOption(text: e.text, action: onAnswer))
+                      .toList(),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  void onAnswer(String text) {
+    final message =
+        _question.isCorrect(text) ? "Acertou mizeravi!" : "Errrrrrouuuuuu";
+
+    var snackBar = SnackBar(content: Text(message));
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+    setState(() {
+      _visible = false;
+    });
+
+    Future.delayed(const Duration(milliseconds: 500), () {
+      setState(() {
+        _position++;
+
+        if (_position >= _questions.length) {
+          return;
+        }
+        _question = _questions[_position];
+        _visible = true;
+      });
+    });
   }
 }

@@ -18,7 +18,7 @@ class HomePage extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(context, "/question");
               },
-              child: const Text('Comecar'),
+              child: const Text('Começar!'),
             ),
           ],
         ),

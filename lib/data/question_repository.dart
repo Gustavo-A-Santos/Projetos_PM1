@@ -1,7 +1,7 @@
 import 'package:quiz/domain/answer.dart';
 import 'package:quiz/domain/question.dart';
 
-List<Question> loadQuestion() {
+List<Question> loadQuestions() {
   return <Question>[
     Question(
       text: "Qual a cor predominante do tubarão branco",

@@ -8,16 +8,19 @@ class Question {
   final Answer d;
   final Answer e;
 
-  Question({
-    required this.text,
-    required this.a,
-    required this.b,
-    required this.c,
-    required this.d,
-    required this.e
-  });
+  Question(
+      {required this.text,
+      required this.a,
+      required this.b,
+      required this.c,
+      required this.d,
+      required this.e});
 
   bool isCorrect(String answer) {
     return [a, b, c, d, e].where((e) => e.text == answer).first.correct;
+  }
+
+  List<Answer> answers() {
+    return [a, b, c, d, e];
   }
 }
