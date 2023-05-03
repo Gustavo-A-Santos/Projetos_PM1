@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz/presentation/pages/finish_page.dart';
 import 'package:quiz/presentation/pages/home_page.dart';
 import 'package:quiz/presentation/pages/question_page.dart';
 
@@ -16,6 +17,7 @@ class Aplicacao extends StatelessWidget {
       routes: {
         "/": (context) => const HomePage(),
         "/question": (context) => const QuestionPage(),
+        "/finish": (context) => const FinishPage(),
       },
     );
   }

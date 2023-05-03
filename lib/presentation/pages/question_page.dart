@@ -15,17 +15,17 @@ class _QuestionPageState extends State<QuestionPage> {
   late List<Question> _questions;
   late Question _question;
   late int _position;
+  late int _correctAnswers;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     _visible = true;
     _questions = loadQuestions();
     _position = 0;
-
     _question = _questions[_position];
+    _correctAnswers = 0;
   }
 
   @override
@@ -65,8 +65,12 @@ class _QuestionPageState extends State<QuestionPage> {
   }
 
   void onAnswer(String text) {
-    final message =
-        _question.isCorrect(text) ? "Acertou mizeravi!" : "Errrrrrouuuuuu";
+    final correct = _question.isCorrect(text);
+    final message = correct ? "Acertou mizeravi!" : "Errrrrrouuuuuu";
+
+    if (correct) {
+      _correctAnswers++;
+    }
 
     var snackBar = SnackBar(content: Text(message));
 
@@ -76,13 +80,18 @@ class _QuestionPageState extends State<QuestionPage> {
       _visible = false;
     });
 
+    final position = _position + 1;
+
+    if (position >= _questions.length) {
+      Navigator.pushNamed(context, "/finish",
+          arguments: "Você acertou $_correctAnswers de ${_questions.length}!");
+
+      return;
+    }
+
     Future.delayed(const Duration(milliseconds: 500), () {
       setState(() {
-        _position++;
-
-        if (_position >= _questions.length) {
-          return;
-        }
+        _position = position;
         _question = _questions[_position];
         _visible = true;
       });

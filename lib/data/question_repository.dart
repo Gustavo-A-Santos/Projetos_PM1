@@ -12,7 +12,7 @@ List<Question> loadQuestions() {
       e: Answer(text: "rosa", correct: false),
     ),
     Question(
-      text: "Qaunto é 3 + 3 * 3 ?", 
+      text: "Quanto é 3 + 3 * 3 ?", 
       a: Answer(text: "18", correct: false), 
       b: Answer(text: "15", correct: false), 
       c: Answer(text: "13", correct: false), 
