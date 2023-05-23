@@ -1,3 +1,4 @@
+import 'package:cardapio/presentation/pages/lanche_page.dart';
 import 'package:flutter/material.dart';
 import 'package:cardapio/presentation/pages/home_page.dart';
 
@@ -13,7 +14,8 @@ class Aplicacao extends StatelessWidget {
       ),
       initialRoute: "/",
       routes: {
-        "/":(context) => const HomePage(),
+        "/": (context) => const HomePage(),
+        "/lanche": (context) => const LanchePage(),
       },
     );
   }

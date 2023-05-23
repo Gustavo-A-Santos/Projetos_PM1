@@ -6,6 +6,7 @@ class LanchePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final lanche = ModalRoute.of(context)!.settings.arguments as Lanche;
 
     return Scaffold(
@@ -19,19 +20,32 @@ class LanchePage extends StatelessWidget {
             Center(
               child: Image.network(lanche.foto),
             ),
-
             Container(
               margin: const EdgeInsets.only(top: 8, bottom: 8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(lanche.nome),
-                  Text(lanche.precoFormatado)
+                  Text(
+                    lanche.nome,
+                    style: theme.textTheme.headlineMedium,
+                  ),
+                  Text(
+                    lanche.precoFormatado,
+                    style: theme.textTheme.headlineMedium,
+                  ),
                 ],
               ),
             ),
-
-            Container(),
+            Expanded(
+              child: Container(
+                margin: const EdgeInsets.only(bottom: 8),
+                child: ListView.builder(
+                  itemCount: lanche.ingredientes.length,
+                  itemBuilder: (context, index) =>
+                      Text(lanche.ingredientes[index]),
+                ),
+              ),
+            ),
           ],
         ),
       ),

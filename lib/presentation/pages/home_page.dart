@@ -14,16 +14,20 @@ class HomePage extends StatelessWidget {
       ),
       body: ListView.separated(
         separatorBuilder: (context, index) => const Divider(),
-
         itemCount: lanches.length,
-        itemBuilder: (context, index) => Padding(
-          padding: const EdgeInsets.all(8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(lanches[index].nome),
-              Text(lanches[index].precoFormatado),
-            ],
+        itemBuilder: (context, index) => GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(context, "/lanche", arguments: lanches[index]);
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(lanches[index].nome),
+                Text(lanches[index].precoFormatado),
+              ],
+            ),
           ),
         ),
       ),
